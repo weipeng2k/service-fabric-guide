@@ -5,6 +5,23 @@
 </head>
 <body>
 <!--/*@thymesVar id="ip" type="java.lang.String"*/-->
-<p th:text="'Hello, localhost is : ' + ${ip}"></p>
+<table>
+    <tr>
+        <th>Key</th>
+        <th>Value</th>
+    </tr>
+    <tr>
+        <td>localhost ip</td>
+        <td><p th:text="${ip}"></p></td>
+    </tr>
+    <tr>
+        <td>start time</td>
+        <td><p th:text="${startTime}"></p></td>
+    </tr>
+    <tr>
+        <td>uptime</td>
+        <td><p th:text="${uptime}"></p></td>
+    </tr>
+</table>
 </body>
 </html>
