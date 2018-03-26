@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Title</title>
+</head>
+<body>
+<!--/*@thymesVar id="ip" type="java.lang.String"*/-->
+<table>
+    <tr>
+        <th>Key</th>
+        <th>Value</th>
+    </tr>
+    <tr>
+        <td>localhost ip</td>
+        <td><p th:text="${ip}"></p></td>
+    </tr>
+    <tr>
+        <td>start time</td>
+        <td><p th:text="${startTime}"></p></td>
+    </tr>
+    <tr>
+        <td>uptime</td>
+        <td><p th:text="${uptime}"></p></td>
+    </tr>
+</table>
+</body>
+</html>
