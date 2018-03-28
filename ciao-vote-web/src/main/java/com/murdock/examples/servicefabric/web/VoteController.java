@@ -18,21 +18,10 @@ import java.util.concurrent.CompletableFuture;
 @Controller
 public class VoteController {
 
-    private VoteRPC voteRPC;
-
-    public VoteController() {
-        try {
-            voteRPC = ServiceProxyBase.create(VoteRPC.class, new URI("fabric:/CiaoVoteService/VoteService"));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
     @RequestMapping("/html/votes")
     public String vote(Model model) {
         try {
-
-            CompletableFuture<HashMap<String, String>> list = voteRPC.getList();
+            CompletableFuture<HashMap<String, String>> list = ServiceProxyBase.create(VoteRPC.class, new URI("fabric:/CiaoVoteService/VoteService")).getList();
             HashMap<String, String> stringStringHashMap = list.get();
 
             model.addAttribute("votes", stringStringHashMap);
@@ -47,16 +36,26 @@ public class VoteController {
     @RequestMapping("/addItem")
     @ResponseBody
     public String addItem(@RequestParam("name") String name) {
-        CompletableFuture<Integer> integerCompletableFuture = voteRPC.addItem(name);
-        Integer join = integerCompletableFuture.join();
-        return name + " vote " + join;
+        try {
+            CompletableFuture<Integer> integerCompletableFuture = ServiceProxyBase.create(VoteRPC.class,
+                    new URI("fabric:/CiaoVoteService/VoteService")).addItem(name);
+            Integer join = integerCompletableFuture.join();
+            return name + " vote " + join;
+        } catch (Exception ex) {
+            return ex.toString();
+        }
     }
 
     @RequestMapping("/removeItem")
     @ResponseBody
     public String removeItem(@RequestParam("name") String name) {
-        CompletableFuture<Integer> integerCompletableFuture = voteRPC.removeItem(name);
-        Integer join = integerCompletableFuture.join();
-        return name + " vote " + join;
+        try {
+            CompletableFuture<Integer> integerCompletableFuture = ServiceProxyBase.create(VoteRPC.class,
+                    new URI("fabric:/CiaoVoteService/VoteService")).removeItem(name);
+            Integer join = integerCompletableFuture.join();
+            return name + " vote " + join;
+        } catch (Exception ex) {
+            return ex.toString();
+        }
     }
 }
