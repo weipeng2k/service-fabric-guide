@@ -15,9 +15,9 @@ public class VoteApplication {
 
     public static void main(String[] args) throws Exception {
         try {
-            ServiceRuntime.registerStatefulServiceAsync("VoteServiceType",
-                    (context) -> new VoteServiceImpl(context), Duration.ofSeconds(10));
-            log.info("Registered stateful service of type DataServiceType");
+            ServiceRuntime.registerStatelessServiceAsync("VoteServiceType",
+                    (context) -> new VoteServiceImpl(), Duration.ofSeconds(10));
+            log.info("Registered stateless service of type DataServiceType");
             Thread.sleep(Long.MAX_VALUE);
         } catch (Throwable ex) {
             log.warn("Exception occurred", ex);
