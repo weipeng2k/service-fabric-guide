@@ -1,6 +1,7 @@
 package com.murdock.examples.servicefabric.web;
 
 import com.murdock.examples.servicefabric.service.VoteRPC;
+import microsoft.servicefabric.services.remoting.client.FabricServiceProxyFactory;
 import microsoft.servicefabric.services.remoting.client.ServiceProxyBase;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +22,12 @@ public class VoteController {
     @RequestMapping("/html/votes")
     public String vote(Model model) {
         try {
-            CompletableFuture<HashMap<String, String>> list = ServiceProxyBase.create(VoteRPC.class, new URI("fabric:/CiaoVoteService/VoteService")).getList();
+
+            FabricServiceProxyFactory fabricServiceProxyFactory = new FabricServiceProxyFactory();
+            VoteRPC serviceProxy = fabricServiceProxyFactory.createServiceProxy(VoteRPC.class,
+                    new URI("fabric:/CiaoVoteService/VoteService"));
+
+            CompletableFuture<HashMap<String, String>> list = serviceProxy.getList();
             HashMap<String, String> stringStringHashMap = list.get();
 
             model.addAttribute("votes", stringStringHashMap);
@@ -37,8 +43,11 @@ public class VoteController {
     @ResponseBody
     public String addItem(@RequestParam("name") String name) {
         try {
-            CompletableFuture<Integer> integerCompletableFuture = ServiceProxyBase.create(VoteRPC.class,
-                    new URI("fabric:/CiaoVoteService/VoteService")).addItem(name);
+            FabricServiceProxyFactory fabricServiceProxyFactory = new FabricServiceProxyFactory();
+            VoteRPC serviceProxy = fabricServiceProxyFactory.createServiceProxy(VoteRPC.class,
+                    new URI("fabric:/CiaoVoteService/VoteService"));
+
+            CompletableFuture<Integer> integerCompletableFuture = serviceProxy.addItem(name);
             Integer join = integerCompletableFuture.join();
             return name + " vote " + join;
         } catch (Exception ex) {
@@ -50,8 +59,11 @@ public class VoteController {
     @ResponseBody
     public String removeItem(@RequestParam("name") String name) {
         try {
-            CompletableFuture<Integer> integerCompletableFuture = ServiceProxyBase.create(VoteRPC.class,
-                    new URI("fabric:/CiaoVoteService/VoteService")).removeItem(name);
+            FabricServiceProxyFactory fabricServiceProxyFactory = new FabricServiceProxyFactory();
+            VoteRPC serviceProxy = fabricServiceProxyFactory.createServiceProxy(VoteRPC.class,
+                    new URI("fabric:/CiaoVoteService/VoteService"));
+
+            CompletableFuture<Integer> integerCompletableFuture = serviceProxy.removeItem(name);
             Integer join = integerCompletableFuture.join();
             return name + " vote " + join;
         } catch (Exception ex) {
