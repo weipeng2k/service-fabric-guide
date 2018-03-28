@@ -15,13 +15,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Logger;
 
 /**
  * @author weipeng2k 2018年03月27日 下午13:44:19
  */
 public class VoteServiceImpl extends StatefulService implements VoteRPC {
-    private static final Logger logger = Logger.getLogger(VoteServiceImpl.class.getName());
     private static final String MAP_NAME = "votesMap";
     private ReliableStateManager stateManager;
 
