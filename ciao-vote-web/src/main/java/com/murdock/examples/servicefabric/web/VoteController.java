@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
@@ -51,7 +53,11 @@ public class VoteController {
             Integer join = integerCompletableFuture.join();
             return name + " vote " + join;
         } catch (Exception ex) {
-            return ex.toString();
+            StringWriter stringWriter = new StringWriter();
+            PrintWriter printWriter = new PrintWriter(stringWriter);
+            ex.printStackTrace(printWriter);
+
+            return stringWriter.toString();
         }
     }
 
@@ -67,7 +73,11 @@ public class VoteController {
             Integer join = integerCompletableFuture.join();
             return name + " vote " + join;
         } catch (Exception ex) {
-            return ex.toString();
+            StringWriter stringWriter = new StringWriter();
+            PrintWriter printWriter = new PrintWriter(stringWriter);
+            ex.printStackTrace(printWriter);
+
+            return stringWriter.toString();
         }
     }
 }

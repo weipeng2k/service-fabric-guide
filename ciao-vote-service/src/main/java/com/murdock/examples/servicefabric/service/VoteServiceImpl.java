@@ -11,6 +11,7 @@ import java.util.concurrent.ConcurrentMap;
  * @author weipeng2k 2018年03月27日 下午13:44:19
  */
 public class VoteServiceImpl extends StatelessService implements VoteRPC {
+    private static final String MAP_NAME = "votesMap";
 
     private static final ConcurrentMap<String, String> maps = new ConcurrentHashMap<>();
 
