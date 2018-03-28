@@ -34,7 +34,7 @@ public class VoteController {
 
             model.addAttribute("votes", stringStringHashMap);
 
-        } catch (Exception e) {
+        } catch (Throwable e) {
             e.printStackTrace();
         }
 
@@ -52,7 +52,7 @@ public class VoteController {
             CompletableFuture<Integer> integerCompletableFuture = serviceProxy.addItem(name);
             Integer join = integerCompletableFuture.join();
             return name + " vote " + join;
-        } catch (Exception ex) {
+        } catch (Throwable ex) {
             StringWriter stringWriter = new StringWriter();
             PrintWriter printWriter = new PrintWriter(stringWriter);
             ex.printStackTrace(printWriter);
@@ -72,7 +72,7 @@ public class VoteController {
             CompletableFuture<Integer> integerCompletableFuture = serviceProxy.removeItem(name);
             Integer join = integerCompletableFuture.join();
             return name + " vote " + join;
-        } catch (Exception ex) {
+        } catch (Throwable ex) {
             StringWriter stringWriter = new StringWriter();
             PrintWriter printWriter = new PrintWriter(stringWriter);
             ex.printStackTrace(printWriter);
