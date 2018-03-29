@@ -176,3 +176,5 @@ java -jar ciao-springboot-web-0.1-SNAPSHOT.jar
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这个流程开发流程是值得借鉴和思考的，一致的开发部署体验，只是将部署的endpoint集群指向不同的位置，一致的运行部署体验减轻开发人员在不同环境切换的痛苦。普通开发人员在以往的云环境下，都是通过本地部署程序然后进行测试，当测试通过后通过构建工具打包成镜像，然后将镜像部署到测试集成或者线上环境，这天然的割裂开了开发到生产的过程，存在不一致性，而 **Service Fabric** 就标榜其一致的体验，不管在哪里。
 
 ## 小结
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **Service Fabric** 提供了便捷的搭建方式，再次基础上通过`yo`等工具协助开发者将已有的应用转换成为能够被 **Service Fabric** 所识别的形式，并提供了对应的部署和退部署脚本，当用户指定 **Service Fabric** 的endpoint后，就可以将程序部署到其中，并且能够在`Explorer`中完成扩缩容，同时一样的操作模式可以将应用部署到`Azure`云上，完成生产环境部署。
