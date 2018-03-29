@@ -22,7 +22,7 @@ public class VoteServiceImpl extends StatelessService implements VoteRPC {
     public VoteServiceImpl() {
         Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(() -> {
             StatelessServicePartition partition = this.getPartition();
-            HealthInformation healthInformation = new HealthInformation("System.Hosting", "RUNNING", HealthState.Ok);
+            HealthInformation healthInformation = new HealthInformation("System.CM", "State", HealthState.Ok);
             partition.reportInstanceHealth(healthInformation);
         }, 1000, 3000, TimeUnit.MILLISECONDS);
     }
