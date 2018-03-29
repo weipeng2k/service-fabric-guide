@@ -51,4 +51,14 @@ public VoteServiceImpl() {
 <img src="https://github.com/weipeng2k/service-fabric-guide/raw/master/resource/chapter-6-2.png" />
 </center>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以看到整个集群都处于健康状态，新增的健康事件类型也可以在`Explorer`中查到。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以看到整个集群都处于健康状态，新增的健康事件类型也可以在`Explorer`中查到。我们可以随时按如下所示在 `Explorer`中检查实体的运行状况，或者通过平台的运行状况 API 查询。还可以通过添加自己的运行状况报告或使用运行状况 API 来自定义运行状况报告和修改实体的运行状况，健康状态如下图所示：
+
+<center>
+<img src="https://github.com/weipeng2k/service-fabric-guide/raw/master/resource/chapter-6-3.png" />
+</center>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当然你也可以通过SDK进行Metrics埋点，这样可以在`Explorer`中查看相关的内容，如下图所示：
+
+<center>
+<img src="https://github.com/weipeng2k/service-fabric-guide/raw/master/resource/chapter-6-4.png" />
+</center>

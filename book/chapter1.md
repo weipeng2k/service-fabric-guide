@@ -149,7 +149,30 @@ java -jar ciao-springboot-web-0.1-SNAPSHOT.jar
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在`CiaoSpringbootWeb`目录下运行`sfctl cluster select --endpoint http://localhost:19080`，这个操作将会选择集群到对应的 **Service Fabric** 端点。然后直接运行`CiaoSpringbootWeb`目录下的`install.sh`，就会将应用部署到 **Service Fabric** 集群上。
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以看到其过程是将整个`CiaoSpringbootWeb`目录都拷贝到集群上，然后再运行`entryPoint.sh`脚本加以执行，而程序的运行空间是在容器中分配。可以想象如果在内网或者线下环境搭建了 **Service Fabric** 集群，那么在开发者环境中也只需要执行以下`install.sh`就可以完成部署，下面将介绍如何将应用部署到`Azure`上。
+```sh
+$ ./install.sh
+[1/31] files, ApplicationManifest.xml
+[2/31] files, _.dir
+[3/31] files, WebRuntimeServicePkg/ServiceManifest.xml
+[4/31] files, WebRuntimeServicePkg/_.dir
+[5/31] files, WebRuntimeServicePkg/config/Settings.xml
+[6/31] files, WebRuntimeServicePkg/config/_.dir
+[7/31] files, WebRuntimeServicePkg/code/ciao-springboot-web-0.1-SNAPSHOT.jar
+[8/31] files, WebRuntimeServicePkg/code/entryPoint.sh
+[9/31] files, WebRuntimeServicePkg/code/ciao-springboot-web-0.1-SNAPSHOT.jar.original
+[10/31] files, WebRuntimeServicePkg/code/_.dir
+[11/31] files, WebRuntimeServicePkg/code/maven-status/_.dir
+[12/31] files, WebRuntimeServicePkg/code/maven-status/maven-compiler-plugin/_.dir
+[13/31] files, WebRuntimeServicePkg/code/maven-status/maven-compiler-plugin/compile/_.dir
+Complete
+```
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以看到其过程是将整个`CiaoSpringbootWeb`目录都拷贝到集群上，然后再运行`entryPoint.sh`脚本加以执行，而程序的运行空间是在容器中分配。我们访问`http://localhost:8080/html/hello`，可以看到以下输出：
+
+<center>
+<img src="https://github.com/weipeng2k/service-fabric-guide/raw/master/resource/chapter-1-7.png" />
+</center>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以想象如果在内网或者线下环境搭建了 **Service Fabric** 集群，那么在开发者环境中也只需要执行以下`install.sh`就可以完成部署，下面将介绍如何将应用部署到`Azure`上。
 
 ## 将应用部署到Azure
 
