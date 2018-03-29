@@ -1,14 +1,11 @@
 package com.murdock.examples.servicefabric.service;
 
 import microsoft.servicefabric.services.runtime.StatelessService;
-import system.fabric.LoadMetric;
 import system.fabric.StatelessServicePartition;
 import system.fabric.health.HealthInformation;
 import system.fabric.health.HealthState;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -25,14 +22,8 @@ public class VoteServiceImpl extends StatelessService implements VoteRPC {
     public VoteServiceImpl() {
         Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(() -> {
             StatelessServicePartition partition = this.getPartition();
-            HealthInformation healthInformation = new HealthInformation("A", "A", HealthState.Ok);
+            HealthInformation healthInformation = new HealthInformation("fabric:/CiaoVoteService", "propertyOne", HealthState.Ok);
             partition.reportInstanceHealth(healthInformation);
-        }, 1000, 3000, TimeUnit.MILLISECONDS);
-
-        Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(() -> {
-            List<LoadMetric> metricList = new ArrayList<LoadMetric>();
-            metricList.add(new LoadMetric("load", 50));
-            this.getPartition().reportLoad(metricList);
         }, 1000, 3000, TimeUnit.MILLISECONDS);
     }
 
