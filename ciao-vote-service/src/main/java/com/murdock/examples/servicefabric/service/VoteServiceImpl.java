@@ -1,19 +1,32 @@
 package com.murdock.examples.servicefabric.service;
 
 import microsoft.servicefabric.services.runtime.StatelessService;
+import system.fabric.StatelessServicePartition;
+import system.fabric.health.HealthInformation;
+import system.fabric.health.HealthState;
 
 import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author weipeng2k 2018年03月27日 下午13:44:19
  */
 public class VoteServiceImpl extends StatelessService implements VoteRPC {
-    private static final String MAP_NAME = "votesMap";
 
     private static final ConcurrentMap<String, String> maps = new ConcurrentHashMap<>();
+
+    public VoteServiceImpl() {
+        Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(() -> {
+            StatelessServicePartition partition = this.getPartition();
+            HealthInformation healthInformation = new HealthInformation("A", "A", HealthState.Ok);
+            partition.reportInstanceHealth(healthInformation);
+        }, 1000, 3000, TimeUnit.MILLISECONDS);
+    }
+
 
     public CompletableFuture<HashMap<String, String>> getList() {
         HashMap<String, String> copy = new HashMap<>(maps);

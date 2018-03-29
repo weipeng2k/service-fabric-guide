@@ -167,7 +167,7 @@ java -jar ciao-springboot-web-0.1-SNAPSHOT.jar
 <img src="https://github.com/weipeng2k/service-fabric-guide/raw/master/resource/chapter-1-5.png" />
 </center>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;既然`Azure`的endpoint已经有了，我们就可以在项目`CiaoSpringbootWeb`下执行``sfctl cluster select --endpoint http://Your-Connection-endpoint` ，待连接之后再执行`install.sh`脚本将应用部署到`Azure`上，但是笔者机器无法连接，原因不详，这个工具还需要微软继续加强兼容性。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;既然`Azure`的endpoint已经有了，我们就可以在项目`CiaoSpringbootWeb`下执行``sfctl cluster select --endpoint http://Your-Connection-endpoint` ，待连接之后再执行`install.sh`脚本将应用部署到`Azure`上，但是笔者机器无法连接，原因不详，还需要微软修复完善。
 
 <center>
 <img src="https://github.com/weipeng2k/service-fabric-guide/raw/master/resource/chapter-1-6.png" />
