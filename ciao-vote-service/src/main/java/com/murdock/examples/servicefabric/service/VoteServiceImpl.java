@@ -25,20 +25,10 @@ public class VoteServiceImpl extends StatelessService implements VoteRPC {
     public VoteServiceImpl() {
         Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(() -> {
             try {
-                StatelessServicePartition partition = this.getPartition();
-                HealthInformation healthInformation = new HealthInformation("System.FM", "State", HealthState.Ok);
-                partition.reportPartitionHealth(healthInformation);
-            } catch (Throwable ex) {
-
-            }
-        }, 1000, 5000, TimeUnit.MILLISECONDS);
-
-        Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(() -> {
-            try {
                 int i = status.incrementAndGet();
                 int value = i % 10;
                 StatelessServicePartition partition = this.getPartition();
-                HealthInformation healthInformation = new HealthInformation("System.FM", "Test",
+                HealthInformation healthInformation = new HealthInformation("System.FM", "State",
                         value <= 5 ? HealthState.Ok : HealthState.Error);
                 partition.reportPartitionHealth(healthInformation);
             } catch (Throwable ex) {
@@ -46,7 +36,15 @@ public class VoteServiceImpl extends StatelessService implements VoteRPC {
             }
         }, 1000, 3000, TimeUnit.MILLISECONDS);
 
+        Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(() -> {
+            try {
+                StatelessServicePartition partition = this.getPartition();
+                HealthInformation healthInformation = new HealthInformation("System.FM", "Test", HealthState.Ok);
+                partition.reportPartitionHealth(healthInformation);
+            } catch (Throwable ex) {
 
+            }
+        }, 1000, 5000, TimeUnit.MILLISECONDS);
     }
 
 
