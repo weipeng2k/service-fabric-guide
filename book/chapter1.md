@@ -106,4 +106,7 @@ public class HelloController {
 
 ## 部署SpringBoot应用
 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;环境已经切换到`Ubuntu`下，在`ciao-springboot-web`目录下，运行`yo azuresfguest`，会有类似对话模式内容出现。
+
+
 ## 将应用部署到Azure
