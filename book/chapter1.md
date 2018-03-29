@@ -32,6 +32,12 @@ sudo /opt/microsoft/sdk/servicefabric/common/clustersetup/devclustersetup.sh
 
 > 微软的产品秉承了出现问题通过重启可以解决的优良传统，笔者在部署一个有状态服务出现问题时，始终无法删除该应用，当通过重新安装和重启后，得以修复
 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果成功运行，可以尝试访问`http://yourIP:19080/Explorer/index.html`，会看到类似如下界面：
+
+<center>
+<img src="https://github.com/weipeng2k/service-fabric-guide/raw/master/resource/chapter-1-2.png" />
+</center>
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Service Fabric** 对应用的部署结构有要求，因此需要安装一些工具协助生成这些文件，这个过程实际类似 `spring initializer` 或者 `jboss-forge`，任何云厂商都有一个高效简洁的应用部署搭建工具，将用户的应用能够适配到自己云上的部署环境。
 
 ```sh
@@ -102,11 +108,55 @@ public class HelloController {
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;运行`mvn clean package`后，在`target`目录下执行`java -jar ciao-springboot-web-0.1-SNAPSHOT.jar`，应用正常启动，访问`http://localhost:8080/html/hello`，输出如下：
 
+<center>
+<img src="https://github.com/weipeng2k/service-fabric-guide/raw/master/resource/chapter-1-1.png" width="50%" height="50%" />
+</center>
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;应用正常工作，我们接下来将其部署到 **Service Fabric** 上。
 
 ## 部署SpringBoot应用
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;环境已经切换到`Ubuntu`下，在`ciao-springboot-web`目录下，运行`yo azuresfguest`，会有类似对话模式内容出现。
 
+<center>
+<img src="https://github.com/weipeng2k/service-fabric-guide/raw/master/resource/chapter-1-3.png" />
+</center>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;填写的内容和上面的不一样，具体如下表：
+
+|内容|值|含义|
+|----|-----|-----|
+|Name your application|CiaoSpringbootWeb|应用名|
+|Name of the application service|WebRuntimeService|应用中提供的服务|
+|Source folder of guest binary artifacts|target/|应用的可执行文件或者二进制内容|
+|Relative path to guest binary in source folder|entryPoint.sh|应用的启动脚本，**Service Fabric** 会调用它来启动应用|
+|Parameters to use when calling guest binary|不需要|启动参数|
+|Number of instances of guest binary|1|实例数，这里类似k8s的复制控制器中定义的实例数|
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;运行完成之后会生成该应用的程序清单，它包含了应用名、服务名以及启动脚本和部署实例数等信息，混合应用与配置信息。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`entryPoint.sh`需要自己编写，进入到
+`ciao-springboot-web/CiaoSpringbootWeb/CiaoSpringbootWeb/WebRuntimeServicePkg/code`目录下，创建`entryPoint.sh`，内容如下：
+
+```sh
+#!/bin/bash
+BASEDIR=$(dirname $0)
+cd $BASEDIR
+java -jar ciao-springboot-web-0.1-SNAPSHOT.jar
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;内容很简单就是启动了当前程序，这里没有类似Docker镜像的方式去描述应用，而是采用一组松散、固定的目录以及配置对应用进行描述，但运行时都是以容器的方式进行运行，比如：Docker或者Hyper-V。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在`CiaoSpringbootWeb`目录下运行`sfctl cluster select --endpoint http://localhost:19080`，这个操作将会选择集群到对应的 **Service Fabric** 端点。然后直接运行`CiaoSpringbootWeb`目录下的`install.sh`，就会将应用部署到 **Service Fabric** 集群上。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以看到其过程是将整个`CiaoSpringbootWeb`目录都拷贝到集群上，然后再运行`entryPoint.sh`脚本加以执行，而程序的运行空间是在容器中分配。可以想象如果在内网或者线下环境搭建了 **Service Fabric** 集群，那么在开发者环境中也只需要执行以下`install.sh`就可以完成部署，下面将介绍如何将应用部署到`Azure`上。
 
 ## 将应用部署到Azure
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Service Fabric** 团队提供了免费限时的环境让大家体验，称之为 `Party Cluster`，它是免费、限时的服务托管集群，用来跑 **Service Fabric** 。只需要签署了协议，比如github账户等，就可以使用，部署的集群会运行一小时，然后自动销毁，后需要再使用就需要重新连接到一个新的集群。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;访问 `https://try.servicefabric.azure.co/`，通过`github`登录，就可以试用一下，类似如下界面：
+
+
+
+## 小结
