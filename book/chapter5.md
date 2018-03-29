@@ -4,9 +4,9 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Service Fabric** 提供了多种方法来编写和管理服务。服务可以选择使用 **Service Fabric** API 来充分利用平台的功能和应用程序框架。服务还可以是采用任何语言编写的任意已编译可执行程序，也可以是在 **Service Fabric** 群集上直接托管的容器中运行的代码。之前提到的容器部署，能够支持Docker compose和windows hyper-V，以及ASP.NET core。
 
-`Reliable Services` 是一个用于编写与 **Service Fabric** 平台集成的服务的轻型框架，并且受益于完整的平台功能集。`Reliable Services` 提供最小 API 集合，该集合允许 **Service Fabric** 运行时管理服务的生命周期，以及允许服务与运行时进行交互。`Reliable Services` 可以无状态，类似于大多数服务平台，如 Web 服务器。也就是说，创建的每个服务实例都是平等的，并且状态保存在外部解决方案中，如 Azure DB 或 Azure 表存储。`Reliable Services` 也可以是有状态的，专门用于 **Service Fabric**，其状态使用 `Reliable Collections` 直接保存在服务中。通过复制使状态具有高可用性，以及通过分区来分布状态，所有状态由 Service Fabric 自动管理。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`Reliable Services` 是一个用于编写与 **Service Fabric** 平台集成的服务的轻型框架，并且受益于完整的平台功能集。`Reliable Services` 提供最小 API 集合，该集合允许 **Service Fabric** 运行时管理服务的生命周期，以及允许服务与运行时进行交互。`Reliable Services` 可以无状态，类似于大多数服务平台，如 Web 服务器。也就是说，创建的每个服务实例都是平等的，并且状态保存在外部解决方案中，如 Azure DB 或 Azure 表存储。`Reliable Services` 也可以是有状态的，专门用于 **Service Fabric**，其状态使用 `Reliable Collections` 直接保存在服务中。通过复制使状态具有高可用性，以及通过分区来分布状态，所有状态由 Service Fabric 自动管理。
 
-`Reliable Actor` 框架在 `Reliable Services` 的基础上构建，是根据执行组件设计模式实现虚拟执行组件模式的应用程序框架。`Reliable Actor` 框架使用称为执行组件的单线程执行的独立的计算单元和状态。`Reliable Actor` 为执行组件提供内置通信，以及提供预设的状态暂留和扩展配置。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`Reliable Actor` 框架在 `Reliable Services` 的基础上构建，是根据执行组件设计模式实现虚拟执行组件模式的应用程序框架。`Reliable Actor` 框架使用称为执行组件的单线程执行的独立的计算单元和状态。`Reliable Actor` 为执行组件提供内置通信，以及提供预设的状态暂留和扩展配置。
 
 ## 服务分区
 

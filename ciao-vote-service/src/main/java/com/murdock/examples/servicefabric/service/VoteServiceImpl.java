@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author weipeng2k 2018年03月27日 下午13:44:19
@@ -20,7 +20,7 @@ public class VoteServiceImpl extends StatelessService implements VoteRPC {
 
     private static final ConcurrentMap<String, String> maps = new ConcurrentHashMap<>();
 
-    private static AtomicBoolean status = new AtomicBoolean(true);
+    private static AtomicInteger status = new AtomicInteger(0);
 
     public VoteServiceImpl() {
         Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(() -> {
@@ -31,17 +31,22 @@ public class VoteServiceImpl extends StatelessService implements VoteRPC {
             } catch (Throwable ex) {
 
             }
+        }, 1000, 5000, TimeUnit.MILLISECONDS);
+
+        Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(() -> {
             try {
+                int i = status.incrementAndGet();
+                int value = i % 10;
                 StatelessServicePartition partition = this.getPartition();
                 HealthInformation healthInformation = new HealthInformation("System.FM", "Test",
-                        status.get() ? HealthState.Ok : HealthState.Error);
+                        value <= 5 ? HealthState.Ok : HealthState.Error);
                 partition.reportPartitionHealth(healthInformation);
             } catch (Throwable ex) {
 
-            } finally {
-                status.set(!status.get());
             }
-        }, 1000, 5000, TimeUnit.MILLISECONDS);
+        }, 1000, 3000, TimeUnit.MILLISECONDS);
+
+
     }
 
 

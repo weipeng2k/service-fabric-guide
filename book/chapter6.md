@@ -45,4 +45,10 @@ public VoteServiceImpl() {
 }
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上述代码在服务构造的时候开启定时任务，周期性的汇报健康状态，其中`HealthInformation`第一个参数是sourceId，第二个是property，我们分别发送两个健康事件。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上述代码在服务构造的时候开启定时任务，周期性的汇报健康状态，其中`HealthInformation`第一个参数是sourceId，第二个是property，我们分别发送两个健康事件。部署`ciao-vote-service`后，打开`Explorer`可以看到新增的健康事件以及状态。
+
+<center>
+<img src="https://github.com/weipeng2k/service-fabric-guide/raw/master/resource/chapter-6-2.png" />
+</center>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以看到整个集群都处于健康状态，新增的健康事件类型也可以在`Explorer`中查到。
