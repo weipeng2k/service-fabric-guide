@@ -157,6 +157,22 @@ java -jar ciao-springboot-web-0.1-SNAPSHOT.jar
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;访问 `https://try.servicefabric.azure.co/`，通过`github`登录，就可以试用一下，类似如下界面：
 
+<center>
+<img src="https://github.com/weipeng2k/service-fabric-guide/raw/master/resource/chapter-1-4.png" width="50%" height="50%" />
+</center>
 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下载`PFX`，导入浏览器后就可以访问`Service Fabric Explorer`，笔者分配了一个美西的环境，有三个节点可以用，一小时后收回，再申请再提供，当然这些操作需要再做一遍。
+
+<center>
+<img src="https://github.com/weipeng2k/service-fabric-guide/raw/master/resource/chapter-1-5.png" />
+</center>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;既然`Azure`的endpoint已经有了，我们就可以在项目`CiaoSpringbootWeb`下执行``sfctl cluster select --endpoint http://Your-Connection-endpoint` ，待连接之后再执行`install.sh`脚本将应用部署到`Azure`上，但是笔者机器无法连接，原因不详，这个工具还需要微软继续加强兼容性。
+
+<center>
+<img src="https://github.com/weipeng2k/service-fabric-guide/raw/master/resource/chapter-1-6.png" />
+</center>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这个流程开发流程是值得借鉴和思考的，一致的开发部署体验，只是将部署的endpoint集群指向不同的位置，一致的运行部署体验减轻开发人员在不同环境切换的痛苦。普通开发人员在以往的云环境下，都是通过本地部署程序然后进行测试，当测试通过后通过构建工具打包成镜像，然后将镜像部署到测试集成或者线上环境，这天然的割裂开了开发到生产的过程，存在不一致性，而 **Service Fabric** 就标榜其一致的体验，不管在哪里。
 
 ## 小结
