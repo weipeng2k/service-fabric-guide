@@ -41,7 +41,7 @@ public class VoteServiceImpl extends StatelessService implements VoteRPC {
             } finally {
                 status.set(!status.get());
             }
-        }, 1000, 3000, TimeUnit.MILLISECONDS);
+        }, 1000, 5000, TimeUnit.MILLISECONDS);
     }
 
 
