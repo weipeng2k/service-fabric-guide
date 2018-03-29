@@ -121,6 +121,30 @@ public class WebSpringApplication {
             }
         });
 
+        server.createContext("/test", new HttpHandler() {
+            @Override
+            public void handle(HttpExchange t) {
+
+                try {
+
+                    byte[] respContents = "ok".getBytes("UTF-8");
+
+                    t.getResponseHeaders().add("Content-Type", "text/html; charset=UTF-8");
+                    // 设置响应code和内容长度
+                    t.sendResponseHeaders(200, respContents.length);
+
+                    // 设置响应内容
+                    t.getResponseBody().write(respContents);
+
+                    // 关闭处理器
+                    t.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
         server.setExecutor(null);
         server.start();
 
