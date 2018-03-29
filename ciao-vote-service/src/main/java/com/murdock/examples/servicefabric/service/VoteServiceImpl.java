@@ -25,8 +25,7 @@ public class VoteServiceImpl extends StatelessService implements VoteRPC {
             boolean health = current % 2 == 0;
             try {
                 StatelessServicePartition partition = this.getPartition();
-                HealthInformation healthInformation = new HealthInformation("System.FM", "State",
-                        health ? HealthState.Ok : HealthState.Error);
+                HealthInformation healthInformation = new HealthInformation("System.FM", "State", HealthState.Ok);
                 partition.reportPartitionHealth(healthInformation);
             } catch (Throwable ex) {
 
