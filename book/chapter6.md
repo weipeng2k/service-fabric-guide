@@ -1,6 +1,4 @@
 # Service Fabric 生命周期与运行状况
-https://docs.microsoft.com/zh-cn/azure/service-fabric/service-fabric-application-lifecycle
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 ## 开发、部署和测试
 

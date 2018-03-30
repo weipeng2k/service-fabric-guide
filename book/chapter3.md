@@ -126,6 +126,8 @@ public class VoteApplication {
 
 ## 部署服务端
 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以查看`ciao-vote-service`下的
+
 ## 实现客户端
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;以下内容可以在`ciao-vote-web`中找到，对于消费端来说订阅了服务就可以发起调用，这和大多数框架类似，以下是部分代码。
