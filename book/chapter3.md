@@ -3,19 +3,19 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;之前SpringBoot的例子是展示编程模型中的来宾文件模式，下面将会使用`sf-services`来构造基于 **Service Fabric** API的应用。在介绍之前首先说明一下，目前 **Service Fabric** 对SpringBoot应用支持是存在问题的，客户端应用在生成代理时，会走到 **Service Fabric** 构造的classloader中，而它进行写类文件，在处理SpringBoot这种Jar-in-Jar的场景就存在问题，会出现类型找不到。
 
 <center>
-<img src="https://github.com/weipeng2k/service-fabric-guide/raw/master/resource/chapter-3-1.png" height="50%" width="50"/>
+<img src="https://github.com/weipeng2k/service-fabric-guide/raw/master/resource/chapter-3-1.png"/>
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;因此Java的部署都需要用开放目录部署，目前 **Service Fabric** 官方的Java示例都存在问题，在最新的 **Service Fabric** 上是无法工作的。由于Demo编写时间都在几个月之前，目录结构也比较奇怪，看了一下都是三哥的作品，写的很烂，而且关注度非常低，所以有问题也没有人反馈。
 
 <center>
-<img src="https://github.com/weipeng2k/service-fabric-guide/raw/master/resource/chapter-3-2.png" height="50%" width="50"/>
+<img src="https://github.com/weipeng2k/service-fabric-guide/raw/master/resource/chapter-3-2.png"/>
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;其中有状态的服务是无法跑起来的，因为要加入`so`包的支持，当加入后，一旦运行触发到有状态服务的发布，就会直接虚拟机崩溃。
 
 <center>
-<img src="https://github.com/weipeng2k/service-fabric-guide/raw/master/resource/chapter-3-3.png" height="50%" width="50"/>
+<img src="https://github.com/weipeng2k/service-fabric-guide/raw/master/resource/chapter-3-3.png"/>
 </center>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;因此下面的例子是以无状态服务来演示的，首先定义了接口层`ciao-vote-api`，然后接口的实现`ciao-vote-service`和展示投票结果的`ciao-vote-web`。
@@ -126,7 +126,22 @@ public class VoteApplication {
 
 ## 部署服务端
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以查看`ciao-vote-service`下的
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以查看`ciao-vote-service`下的`CiaoVoteService`中的配置以及脚本，这里需要强调两个点。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第一，不要期望能够在本地跑起来，因为纵使你加入了所有依赖的so包，也最终会报一个`jFrabricRuntime.so`之类的包找不到，如果看到这个错误，恭喜你，你可以在 **Service Fabric** 上部署起来了。至于这些so包哪里能够得到，可以下载`sf-native.jar`，解压缩可以得到4个，如果还是不全可以尝试在 **Service Fabric** 的安装目录上找，网上是搜不到的。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第二，脚本需要加入`java.library.path`定义，这点不要遗漏，否则也跑不起来，可以看一下`entryPoint.sh`中的定义。
+
+```sh
+#!/bin/bash
+BASEDIR=$(dirname $0)
+cd $BASEDIR
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(pwd)/lib
+echo $LD_LIBRARY_PATH
+java -Djava.library.path=$LD_LIBRARY_PATH -jar start.jar
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;运行`install.sh`，可以将服务安装到 **Service Fabric**。
 
 ## 实现客户端
 
@@ -165,6 +180,10 @@ public class WebSpringApplication {
 }
 ```
 
-这里可以看到`fabricServiceProxyFactory.createServiceProxy(VoteRPC.class, new URI("fabric:/CiaoVoteService/VoteService"))`创建了服务的代理，而服务是通过URI来描述的，这里是：`fabric:/CiaoVoteService/VoteService`，其中`CiaoVoteService`是应用名，而`VoteService`是服务名。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这里可以看到`fabricServiceProxyFactory.createServiceProxy(VoteRPC.class, new URI("fabric:/CiaoVoteService/VoteService"))`创建了服务的代理，而服务是通过URI来描述的，这里是：`fabric:/CiaoVoteService/VoteService`，其中`CiaoVoteService`是应用名，而`VoteService`是服务名。
 
 ## 部署客户端
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;部署客户端的过程与部署服务端类似，具体的内容可以在`ciao-vote-web`中的`CiaoVoteWeb`中找到。
+
+> 关于so包的具体个数，在最后章节有提到。

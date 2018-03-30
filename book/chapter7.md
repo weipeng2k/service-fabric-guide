@@ -8,7 +8,9 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以看到 **Service Fabric** 不仅是一个构建微服务和管理分布式应用的平台，而且它从框架和运行时给予了开发、运维、测试以及配置人员一致的体验，做到真正的一站式解决方案，这些是之前的分布式平台所不能涵盖的，但是它也只是观察到了业界的工作，作为后发者，进行了融合补充，在说说它的优点和缺点之前，先主观的做个判断， **Service Fabric** 的一些概念会作为嫁衣让开源届尤其是CNCF中的一些项目所补充和学习，而自己只能向 Windows Phone一样，叫好不叫座，最终沉寂下去。因为从它糟糕的Demo和全范围铺开的功能，以微软一家只能去骗骗一些转型中的传统企业，留存一些.net用户，而自身却无力提升各方面的深度，最终巨大的平台发展只能越来越慢。
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;更多可以参考：https://www.reddit.com/r/AZURE/comments/7oaq2e/what_are_the_differences_between_kubernetes_and/
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;而且从demo实际的关注度来看，几乎没有人，甚至可以说没有人下载使用，都大半年了，笔者也不清楚那些分析的人有没有实际跑过这些内容，而只是大幅相似的进行报道转载。
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;和K8S之间的比较，更多可以参考：https://www.reddit.com/r/AZURE/comments/7oaq2e/what_are_the_differences_between_kubernetes_and/
 
 ## 优点
 
@@ -39,7 +41,10 @@
 |服务卸载容易出错|服务会时不时出现无法卸载的情况，这个在开发态很让人恼火，当然采用重新安装 **Service Fabric** 可以解决，否则非常鬼畜|
 |SDK文档很弱|由于SDK实质没有开放源码，所以只能通过使用文档来查找，但是根据doc很难知道怎样调用，前文中的Health就是笔者在保有最后的兴趣下作的尝试，否则就放弃了|
 |SDK API很乱|API分层很乱，组织的不好|
+|Demo不统一|在通过不同语言的SDK演示例子时，每种语言都是一个不一样的例子，也是不同开发人员来写的，这种情况最好是一个统一的问题，然后多语言分别做，体验会好|
 
 <center>
 <img src="https://github.com/weipeng2k/service-fabric-guide/raw/master/resource/chapter-7-1.png" />
 </center>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;最后，写Demo的三哥程序员代码非常乱，很粗糙。另外，so包占位置，这里只是mark一下需要的包名称，分支上的内容已经删除。
