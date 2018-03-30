@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ApplicationManifest  ApplicationTypeName="CiaoVoteWebType" ApplicationTypeVersion="1.0.0"
+                      xmlns="http://schemas.microsoft.com/2011/01/fabric" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+   <ServiceManifestImport>
+      <ServiceManifestRef ServiceManifestName="VoteWebServicePkg" ServiceManifestVersion="1.0.0" />
+   </ServiceManifestImport>
+   
+   <DefaultServices>
+      <Service Name="VoteWebService">
+         <StatelessService ServiceTypeName="VoteWebServiceType" InstanceCount="1">
+            <SingletonPartition />
+         </StatelessService>
+      </Service>
+   </DefaultServices>
+   
+</ApplicationManifest>
