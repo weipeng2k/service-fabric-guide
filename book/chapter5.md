@@ -61,7 +61,7 @@ class VotingDataService extends StatefulService implements VotingRPC {
     }
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以看到通过`ReliableStateManager`获取到`ReliableHashMap`数据结构，这个数据结构将会在多个服务节点上共享数据，用户不用关心具体的存储，可以简单的认为数据以状态的形式保存在服务实例中。服务后期的扩容缩容都会保有状态。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以看到通过`ReliableStateManager`获取到`ReliableHashMap`数据结构，这个数据结构将会在多个服务节点上共享数据，用户不用关心具体的存储，可以简单的认为数据以状态的形式保存在服务实例中。服务后期的扩容缩容都会保有状态，并且通过数据的复制保证可用性。
 
 ## 有状态服务
 
